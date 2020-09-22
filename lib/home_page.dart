@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _loading = true;
+  bool _loading = false;
   List _output;
   File _image;
   final _picker = ImagePicker();
@@ -49,6 +49,7 @@ class _HomePageState extends State<HomePage> {
     );
     setState(() {
       _output = output;
+      _loading = false;
     });
   }
 
@@ -82,48 +83,54 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (_image == null)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  FaIcon(FontAwesomeIcons.cat, size: 100),
-                  SizedBox(width: 10),
-                  FaIcon(FontAwesomeIcons.dog, size: 100),
-                ],
-              )
-            else
-              Column(
-                children: [
-                  Container(
-                    height: 250,
-                    child: Image.file(_image),
-                  ),
-                  const SizedBox(height: 20),
-                  if (_output != null) Text("${_output[0]}")
-                ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (_image == null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    FaIcon(FontAwesomeIcons.cat, size: 100),
+                    SizedBox(width: 10),
+                    FaIcon(FontAwesomeIcons.dog, size: 100),
+                  ],
+                )
+              else
+                Column(
+                  children: [
+                    Container(
+                      height: 250,
+                      child: Image.file(_image),
+                    ),
+                    const SizedBox(height: 20),
+                    if (_output != null)
+                      Text(
+                        "${_output[0]['label']}".substring(2),
+                        style: Theme.of(context).textTheme.headline3,
+                      )
+                  ],
+                ),
+              const SizedBox(height: 30),
+              RaisedButton(
+                onPressed: () {
+                  _pickImage(
+                    source: ImageSource.camera,
+                  );
+                },
+                child: const Text("Take a Photo"),
               ),
-            const SizedBox(height: 30),
-            RaisedButton(
-              onPressed: () {
-                _pickImage(
-                  source: ImageSource.camera,
-                );
-              },
-              child: const Text("Take a Photo"),
-            ),
-            const SizedBox(height: 10),
-            RaisedButton(
-              onPressed: () {
-                _pickImage(
-                  source: ImageSource.gallery,
-                );
-              },
-              child: const Text("Get from Galery"),
-            ),
-          ],
+              const SizedBox(height: 10),
+              RaisedButton(
+                onPressed: () {
+                  _pickImage(
+                    source: ImageSource.gallery,
+                  );
+                },
+                child: const Text("Get from Galery"),
+              ),
+            ],
+          ),
         ),
       ),
     );
