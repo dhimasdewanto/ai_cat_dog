@@ -17,18 +17,18 @@ class HomePage extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 FaIcon(FontAwesomeIcons.cat, size: 100),
                 SizedBox(width: 10),
                 FaIcon(FontAwesomeIcons.dog, size: 100),
               ],
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             RaisedButton(
               onPressed: () {},
               child: const Text("Take a Photo"),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             RaisedButton(
               onPressed: () {},
               child: const Text("Camera Roll"),
